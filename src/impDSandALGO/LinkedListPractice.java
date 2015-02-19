@@ -7,7 +7,9 @@ import java.io.FileNotFoundException;
 import java.util.*;
 
 /**
- * @author My PC
+ * @author Viswandha Pratap Kondoju
+ * 
+ * NetID : vxk147730
  *
  */
 public class LinkedListPractice {
@@ -16,19 +18,21 @@ public class LinkedListPractice {
 	 * @param args
 	 */
 	
-	/* doUnion will computer the union of the given linkedlist
+	/* union will computer the union of the given linkedlists
 	 * and return the combined List of the elements between these
 	 * two lists
 	 */
-	LinkedList<Integer> doUnion(LinkedList<Integer> l1,LinkedList<Integer> l2)
+	
+public static<T extends Comparable<? super T>>
+    LinkedList<T> union(LinkedList<T> l1, LinkedList<T> l2)   
 	{
-		LinkedList<Integer> combinedList = new LinkedList<Integer>();
+		LinkedList<T> combinedList = new LinkedList<T>();
 		while(!l1.isEmpty()&& !l2.isEmpty())
 		{
 			
-			if(l1.peekFirst() < l2.peekFirst())
+			if(l1.peekFirst().compareTo(l2.peekFirst()) < 0)
 				combinedList.add(l1.remove());
-			else if(l1.peekFirst() > l2.peekFirst())
+			else if(l1.peekFirst().compareTo(l2.peekFirst()) > 0)
 				combinedList.add(l2.remove());  
 			else 
 			{
@@ -49,20 +53,21 @@ public class LinkedListPractice {
 	return combinedList;
 	}
 	
-	/* doIntersection will compute the intersection of the two linked lists
+	/* intersect will compute the intersection of the two linked lists
 	 * and return the common list of elements between the two lists
 	 */
-	LinkedList<Integer> doIntersection(LinkedList<Integer> l1 ,LinkedList<Integer> l2)
+	public static<T extends Comparable<? super T>>
+    LinkedList<T> intersect(LinkedList<T> l1, LinkedList<T> l2)
 	{
-		LinkedList<Integer> commonList = new LinkedList<Integer>();
+		LinkedList<T> commonList = new LinkedList<T>();
 		while(!l1.isEmpty() && !l2.isEmpty())
 		{
-			if(l1.peekFirst() == l2.peekFirst())
+			if(l1.peekFirst().compareTo(l2.peekFirst()) == 0)
 			{
 				commonList.add(l1.remove());
 				l2.remove();
 			}
-			else if(l1.peekFirst() < l2.peekFirst())
+			else if(l1.peekFirst().compareTo(l2.peekFirst()) < 0)
 			{
 				l1.remove();
 			}
@@ -73,57 +78,64 @@ public class LinkedListPractice {
 		}
 		return commonList;
 	}
-	public static void main(String[] args) throws FileNotFoundException{
+	public static <T> void main(String[] args) throws FileNotFoundException{
 		// TODO Auto-generated method stub
 		LinkedList<Integer> l1 = new LinkedList<Integer>();
 		LinkedList<Integer> l2 = new LinkedList<Integer>();
+		LinkedList<Integer> l5 = new LinkedList<Integer>();
+		LinkedList<Integer> l6 = new LinkedList<Integer>();
+		
+		/*Input linked Lists are given in a file input.txt
+		 * I read each line into two linked lists l1,l5 and l2,l6
+		 * And i will create a union of list l1,l5 and intersection
+		 * of lists l2 and l6
+		 */
 		Scanner in;
 		 if (args.length > 0) {
 	            File inputFile = new File(args[0]);
 	            in = new Scanner(inputFile);
-	           // System.out.println(in.toString());
-
+	          
 	        } else {
 	           in = new Scanner(System.in);
 	       }
-		 while(in.hasNextLine())
+		 String line1,line2;
+		 line1 = new String(in.nextLine());
+		 line2 = new String(in.nextLine());
+		 String[] ints_in_line1 = line1.split(" ");
+		 String[] ints_in_line2 = line2.split(" ");
+		 int i = 0; 
+		 /*Reading the input from file into linkedlists 
+		  * l1,l5 and l2,l6
+		  */
+		 while(i < ints_in_line1.length)
 		 {
-			 System.out.println(in.next());
+			l1.add(Integer.parseInt(ints_in_line1[i]));
+			l5.add(Integer.parseInt(ints_in_line1[i++]));
 		 }
 		 
-
-		
-		int i = 0;
-		while(i<7)
-		{
-			l1.add(i++*2);
-		}
-	//	System.out.println(l1);
 		 i = 0;
-		while(i < 5)
-		{
-			l2.add(i++*3);
-		}
-	//	System.out.println(l2);
+		 while(i < ints_in_line2.length)
+		 {
+			l2.add(Integer.parseInt(ints_in_line2[i]));
+			l6.add(Integer.parseInt(ints_in_line2[i++]));
+		 }		
+		
+	    System.out.println("First list:" + l1);
+		System.out.println("Second List : " + l2);
 		LinkedListPractice llp = new LinkedListPractice();
-		LinkedList<Integer> l3 = new LinkedList<Integer>();
-		LinkedList<Integer> l4 = new LinkedList<Integer>();
-		//l3 = llp.doUnion(l1, l2);
-		l4 = llp.doIntersection(l1, l2);
 		
-		//System.out.println("Union of the above two lists is:" + l3);
-	//	System.out.println("Intersection of the above two lists is:" + l4);
+		/* l3 and l4 are the linked lists to store the resultant 
+		 * combined and common linked lists returned by the union 
+		 * intersect functions respectively
+		 * 
+		 */
+		LinkedList l3 = new LinkedList<Integer>();
+		LinkedList l4 = new LinkedList<Integer>();
+		l3 = union(l1, l2);
+		l4 = intersect(l5, l6);
 		
-	
-		/*l3.add(5);
-		l3.addAll(l1);
-		System.out.println(l3);
-		l3.remove();
-		System.out.println(l3);*/
+		System.out.println("Union of the above two lists is:" + l3);
+	    System.out.println("Intersection of the above two lists is:" + l4);
 		
-		
- 
-	}
-
-	//
+		}
 	}
