@@ -1,7 +1,7 @@
 package HelloWorld;
 
 /** Implementation of binary search
- *  @author rbk
+ * 
  */
 
 import java.util.Comparator;
